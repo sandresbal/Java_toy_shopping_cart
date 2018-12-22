@@ -35,7 +35,9 @@ public class Login extends HttpServlet {
 		RequestDispatcher rd = null;
 		//comprobamos si el password es válido 
 		if (request.getParameter("password").equals("Abracadabra")) {
-			//si lo es, vamos a la página de opciones
+			/*si lo es, vamos a la página de opciones, donde podrá comprar o listar
+			* los productos del carro de la compra
+			*/
 			rd = request.getRequestDispatcher("opciones.html");
 			rd.forward(request, response);
 		} else {
