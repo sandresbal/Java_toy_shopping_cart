@@ -36,7 +36,6 @@ public class Comprar extends HttpServlet {
     	throws ServletException, IOException {
     	ArrayList<Articulo> lista = null;
     	HttpSession sesion = request.getSession();
-    	//ArrayList<Articulo> lista = (ArrayList<Articulo>)sesion.getAttribute("lista");
 		if (sesion.getAttribute("lista") == null) {
 			lista = new ArrayList<Articulo>();
 			System.out.print("el programa me dice que la lista está vacía");

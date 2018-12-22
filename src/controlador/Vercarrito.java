@@ -34,30 +34,43 @@ public class Vercarrito extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		/*
+		 * El método service se trae el atributo de sesión "lista". Si inicialmente éste
+		 * está vacío, se informa al usuario y se le da la oportunidad de volver a la página
+		 * de opciones.
+		 */
+		
 		PrintWriter out = response.getWriter();
 		HttpSession sesion = request.getSession();
 		if (sesion.getAttribute("lista") == null) {
 			System.out.println("no hay artículos en la cesta");
+			out.println("<html><head><title>Carro Vacío</title></head><body>");
+			out.println("<h3>No hay artículos en tu cesta");
+			out.println("<a href='opciones.html'>Volver atrás</a>");
+			out.println("</body></html>");
+			out.close();
+		/*
+		 * Si el atributo de sesión "lista" no está vacío, creamos un objeto ArrayList
+		 * que contiene los artículos de la lista y construimos la tabla que permite
+		 * visualizar esos artículos, así como las opciones de eliminar cada producto,
+		 * borrar el carrito y volver a opciones
+		 */
 		} else {
 			ArrayList<Articulo> lista = (ArrayList<Articulo>) sesion.getAttribute("lista");
 			System.out.println("tamaño de la lista:" + lista.size());
 			out.println("<html><head><title>Lista</title></head><body>");
 			out.println("<table border='1'>");
 			out.println("<th>Eliminar ?</th><th>Producto</th><th>Unidades</th><th>Color</th>");
-			// out.println("<th>Eliminar
-			// ?</th><th>Producto</th><th>Unidades</th><th>Color</th>");
 			for (Articulo artic : lista) {
-				out.println("<tr><td><a href='Procesar?opcion=eliminar'>Eliminar</a></td>" + 
+				out.println("<tr><td><a href='Procesar?opcion=eliminar&producto="+ artic.getProducto() + 
+						"&unidades=" + artic.getUnidades() + "&color="+ artic.getColor()+ "'>Eliminar</a></td>" + 
 						"<td>" + artic.getProducto() + "</td>" + 
 						"<td>" + artic.getUnidades() + "</td>" + 
 						"<td>" + artic.getColor() + "</td></tr>");
 			}
-			;
 			out.println("</table><br>");
-			// out.println("<p><a href='opciones.html'>Opciones</p>");
-			// out.println("<a href='Procesar?opcion=eliminartodo'>Vaciar carrito</a>");
-
+			out.println("<a href='Procesar?opcion=eliminartodo'>Vaciar carrito</a>");
+			out.println("<p><a href='opciones.html'>Opciones</p>");
 			out.println("</body></html>");
 			out.close();
 		}

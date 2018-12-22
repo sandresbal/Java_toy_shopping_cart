@@ -33,14 +33,16 @@ public class Login extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
+		//comprobamos si el password es válido 
 		if (request.getParameter("password").equals("Abracadabra")) {
+			//si lo es, vamos a la página de opciones
 			rd = request.getRequestDispatcher("opciones.html");
 			rd.forward(request, response);
 		} else {
-			rd = request.getRequestDispatcher("Error");
+			//si no lo es, vamos a una página de error con opción de vuelta al login
+			rd = request.getRequestDispatcher("error.html");
 			rd.forward(request, response);
 		}
-
 	}
 
 	/**
